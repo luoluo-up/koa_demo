@@ -28,10 +28,23 @@ class CartService {
       const list = await CartModel.find()
         .skip(skipDocs)
         .limit(pageSize)
-        .populate("goods_info");
+        .populate("goods_info", "_id goods_name goods_img goods_price")
+        .lean();
       return { pageNum, pageSize, total: count, list };
     } catch (error) {
-        console.log(error);
+      console.log(error);
+      throw new Error(error);
+    }
+  }
+  async updateCarts(params) {
+    try {
+      const { id, number, selected } = params;
+      const res = await CartModel.findOneAndUpdate({ _id:id }, {number,selected},{number,selected}, {
+        new: true,
+      });
+      if (!res) return '';
+    } catch (error) {
+      console.log(error);
       throw new Error(error);
     }
   }

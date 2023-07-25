@@ -22,18 +22,17 @@ const CartSchema = new mongoose.Schema(
       default: true,
       description: "是否选中",
     },
-    goods_info: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "goods",
-      localField: "goods_id",
-      foreignField: "_id",
-    },
   },
   {
     versionKey: false,
   }
 );
-
+CartSchema.virtual('goods_info', {
+  localField: 'goods_id',
+  ref:'goods',
+  foreignField: '_id',
+  justOne: true
+})
 CartSchema.set("toJSON", {
   transform: function (doc, ret) {
     // 删除返回的字段
