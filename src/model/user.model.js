@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
     description: "用户的姓名",
   },
   password: { type: String, required: true, description: "用户的密码" },
-  id_admin: {
+  is_admin: {
     type: Number,
     required: true,
     default: 0,
