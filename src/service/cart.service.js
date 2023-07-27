@@ -39,10 +39,39 @@ class CartService {
   async updateCarts(params) {
     try {
       const { id, number, selected } = params;
-      const res = await CartModel.findOneAndUpdate({ _id:id }, {number,selected},{number,selected}, {
-        new: true,
-      });
-      if (!res) return '';
+      const res = await CartModel.findOneAndUpdate(
+        { _id: id },
+        { number, selected },
+        {
+          new: true,
+        }
+      );
+      if (!res) return "";
+    } catch (error) {
+      console.log(error);
+      throw new Error(error);
+    }
+  }
+  async removeCarts(ids) {
+    try {
+      // const objectIds = ids.map((id) => ObjectId(id));
+      return await CartModel.deleteMany({ _id: { $in: ids } });
+    } catch (error) {
+      console.log(error);
+      throw new Error(error);
+    }
+  }
+  async selectAllCarts(user_id) {
+    try {
+      return await CartModel.updateMany({ user_id }, { selected: true });
+    } catch (error) {
+      console.log(error);
+      throw new Error(error);
+    }
+  }
+  async unSelectAllCarts(user_id) {
+    try {
+      return await CartModel.updateMany({ user_id }, { selected: false });
     } catch (error) {
       console.log(error);
       throw new Error(error);

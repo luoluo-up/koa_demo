@@ -16,11 +16,12 @@ app.use(
       onFileBegin: (name, file) => {
         // 检查文件类型
         if (!file.mimetype.startsWith("image/")) {
-        //   throw new Error("Only image files are allowed");
-            throw(400,'不支持的文件类型')
+          //   throw new Error("Only image files are allowed");
+          throw (400, "不支持的文件类型");
         }
       },
     },
+    parsedMethods: ["POST", "PUT", "PATCH", "DELETE"],
   })
 );
 app.use(KoaStatic(path.join(__dirname, '../upload')));
