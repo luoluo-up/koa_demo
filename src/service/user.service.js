@@ -20,9 +20,9 @@ class UserService {
   }
   async updateById({ id, user_name, password, is_admin }) {
     const whereOpt = { id };
-    user_name && Object.assign(whereOpt, { user_name });  
+    user_name && Object.assign(whereOpt, { user_name });
     password && Object.assign(whereOpt, { password });
-      is_admin && Object.assign(whereOpt, { is_admin });
+    is_admin && Object.assign(whereOpt, { is_admin });
     const res = await UserModel.updateOne(whereOpt);
     return res;
   }

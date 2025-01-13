@@ -1,11 +1,13 @@
-const Koa = require('koa');
-const path = require('path');
-const { koaBody } = require('koa-body');
-const KoaStatic = require('koa-static');
-const router = require('../router')
+const Koa = require("koa");
+const path = require("path");
+const { koaBody } = require("koa-body");
+const KoaStatic = require("koa-static");
+const router = require("../router");
+const cors = require("@koa/cors");
 const app = new Koa();
-const errHandler = require('./errHandler');
-const parameter = require('koa-parameter');
+const errHandler = require("./errHandler");
+const parameter = require("koa-parameter");
+app.use(cors());
 app.use(
   koaBody({
     multipart: true,
@@ -24,10 +26,10 @@ app.use(
     parsedMethods: ["POST", "PUT", "PATCH", "DELETE"],
   })
 );
-app.use(KoaStatic(path.join(__dirname, '../upload')));
+app.use(KoaStatic(path.join(__dirname, "../upload")));
 app.use(parameter(app));
 app.use(router.routes()).use(router.allowedMethods());
 //统一错误处理
 
-app.on('error', errHandler)
-module.exports = app
+app.on("error", errHandler);
+module.exports = app;
